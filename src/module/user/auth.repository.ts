@@ -2,7 +2,7 @@ import { types } from "cassandra-driver";
 import { cassandraClient } from "../../config";
 import { HelperFns } from "../../utils/helper.fns";
 import { v4 as uuidv4 } from "uuid";
-import { ILogin } from "./user.schema";
+import { ILogin } from "./auth.schema";
 
 export class AuthRepository {
   async createUser(data: Record<string, any>) {
@@ -39,7 +39,7 @@ export class AuthRepository {
             email: data.email,
             phone_number: data.phone_number,
             role: data.role,
-            createdAt: new Date(),
+            created_at: new Date(),
           },
         };
       } catch (error) {

@@ -5,17 +5,17 @@ export const createUserSchema = {
     last_name: { type: "string" },
     email: { type: "string", format: "email" },
     phone_number: { type: "string" },
-    role: { type: "string" },
+    role: { type: "string", default: "user"},
     password: { type: "string" },
   },
-  required: ["first_name", "last_name", "email", "role", "password"],
+  required: ["first_name", "last_name", "email", "password"],
 };
 
 export interface ICreateUser {
   first_name: string;
   last_name: string;
   email: string;
-  phone_numner: string;
+  phone_number: string;
   role: string;
   password: string;
 }

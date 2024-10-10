@@ -2,7 +2,7 @@ import {
   createUserSchema,
   loginResponseSchema,
   loginSchema,
-} from "./user.schema";
+} from "./auth.schema";
 import { AuthService } from "./auth.service";
 
 const authService = new AuthService();

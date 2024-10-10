@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { ICreateUser, ILogin } from "./user.schema";
+import { ICreateUser, ILogin } from "./auth.schema";
 import { AuthRepository } from "./auth.repository";
 
 const authRepo = new AuthRepository();

@@ -9,37 +9,34 @@ const migration = async () => {
     last_name text,
     email text,                         
     phone_number text,
-    password_hash text,
-    created_at timestamp,              
-    role text                       
+    password_hash text,            
+    role text,
+    created_at timestamp,
+    updated_at timestamp,
+    deleted_at timestamp                        
     )`,
     `CREATE TABLE IF NOT EXISTS products (
     id UUID PRIMARY KEY,             
     name text,                         
     category text,
-    image_uri text                     
+    image_uri text,
+    created_at timestamp,
+    updated_at timestamp,
+    deleted_at timestamp               
 )`,
     `CREATE TABLE IF NOT EXISTS product_variants (
     id UUID PRIMARY KEY,                   
     name text,
     description text,
-    size text,
-    flavour text,
     type text,
     stock int,
-    stock_alert_limit int,
-    is_enabled boolean,
     images_uri list<text>,               
-    created_at timestamp,
-    deleted_at timestamp,
-    selling_price double,
-    cost_price double,
+    price double,
     discount_price double,
-    packaging_cost double,
-    labelling_cost double,
     product_id UUID,                       
-    product_name text,                    
-    product_category text                 
+    created_at timestamp,
+    updated_at timestamp,
+    deleted_at timestamp  
 )`,
   ];
 

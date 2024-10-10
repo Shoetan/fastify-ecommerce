@@ -1,3 +1,4 @@
+const cloudinary = require("cloudinary").v2;
 import { config } from "dotenv";
 import cassandra from "cassandra-driver";
 config();
@@ -30,4 +31,12 @@ export const connectDB = async () => {
   } catch (error) {
     console.error("Failed to connect to ScyllaDB", error);
   }
+};
+
+export const cloudinaryConfig = async () => {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
 };

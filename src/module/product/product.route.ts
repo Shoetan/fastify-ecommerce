@@ -1,23 +1,42 @@
 import { ProductService } from "./product.service";
 
-import { createProductSchema } from "./product.schema";
+import {
+  createProductSchema,
+  createProductVariantSchema,
+} from "./product.schema";
 
-const productService = new ProductService()
+const productService = new ProductService();
 
 async function productRoutes(server: any) {
   server.post(
     "/",
     {
       onRequest: [server.authenticate],
-      schema:{
-        body:createProductSchema,
+      schema: {
+        body: createProductSchema,
         response: {
-          201: createProductSchema.properties
-        }
-      }
+          201: createProductSchema.properties,
+        },
+      },
     },
     productService.createProductHandler
-  )
+  );
+
+  server.post(
+    "/variant",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        body: createProductVariantSchema,
+        response: {
+          201: createProductVariantSchema.properties,
+        },
+      },
+    },
+    productService.createProductVariantHandler
+  );
+
+  server.get("/:id", productService.getProductByIdHandler);
 }
 
-export default productRoutes
+export default productRoutes;
