@@ -97,4 +97,52 @@ export class ProductService {
       return reply.code(500).send({ message: "Failed to fetch product" });
     }
   }
+
+
+  async getAllProductHandler(
+    request: FastifyRequest,
+    reply: FastifyReply
+  ) {
+    try {
+
+      const products = await productRepo.getAllProducts()
+
+      if (!products) {
+        return reply.code(404).send({ message: "Product not found" });
+      }
+
+      return reply.code(200).send(products);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return reply.code(500).send({ message: "Failed to fetch product" });
+    }
+  }
+
+
+  async updateProductHandler(
+    request: FastifyRequest<{
+      Body: ICreateProduct;
+    }>,
+    reply: FastifyReply
+  ) {
+    try {
+      const { name, category, product_image } = request.body;
+
+      const result = await cloudinaryHandler(
+        product_image,
+        "fastify-ecommerce"
+      );
+
+      const payload = {
+        name,
+        category,
+        image_uri: result.secure_url,
+      };
+      const product = await productRepo.updateProduct(payload)
+      return reply.code(200).send(product);
+    } catch (error) {
+      console.log(error);
+      return reply.code(500).send(error);
+    }
+  }
 }

@@ -37,6 +37,21 @@ async function productRoutes(server: any) {
   );
 
   server.get("/:id", productService.getProductByIdHandler);
+  server.get("/", productService.getAllProductHandler);
+
+  server.patch(
+    "/",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        body: createProductSchema,
+        response: {
+          200: createProductSchema.properties,
+        },
+      },
+    },
+    productService.updateProductHandler
+  );
 }
 
 export default productRoutes;

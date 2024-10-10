@@ -95,4 +95,44 @@ export class ProductRepository {
 
     return product;
   }
+
+  async getAllProducts() {
+    const productQuery = `SELECT * FROM products`;
+
+    const productResult = await cassandraClient.execute(productQuery)
+    if (productResult.rowLength === 0){
+      return null
+    }
+
+    const products = productResult.rows
+
+    return products
+
+  }
+
+  async updateProduct(data: Record<string, any>){
+    const productUpdateQuery = `
+      UPDATE products 
+      SET name = ?, category = ?, image_uri = ?, updated_at = toTimestamp(now()) 
+      WHERE id = ?;
+    `;
+
+    const values = [
+      data.name,
+      data.category,
+      data.image_uri,
+      data.productId
+    ]
+    
+    // Execute the query, binding the positional parameters
+    const productResult = await cassandraClient.execute(
+      productUpdateQuery, 
+      values,  // bind parameters in order
+      { prepare: true }
+    );
+  
+    return productResult;
+  }
+  
+
 }
