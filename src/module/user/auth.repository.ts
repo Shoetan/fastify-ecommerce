@@ -51,7 +51,7 @@ export class AuthRepository {
   }
 
   async findUserByEmail(email: string) {
-    const query = "SELECT * FROM users WHERE email = ? LIMIT 1";
+    const query = "SELECT * FROM users WHERE email = ? LIMIT 1 ALLOW FILTERING";
 
     try {
       const result: types.ResultSet = await cassandraClient.execute(

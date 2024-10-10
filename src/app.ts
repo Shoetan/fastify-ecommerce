@@ -2,6 +2,7 @@ import fastify, { FastifyReply } from "fastify";
 import { config } from "dotenv";
 import { appConfig, connectDB, loggerConfig } from "./config";
 import authRoutes from "./module/user/auth.route";
+import productRoutes from "./module/product/product.route";
 config();
 
 const server = fastify({
@@ -27,7 +28,9 @@ async function bootstrap() {
     }
   );
 
+
   server.register(authRoutes, { prefix: "api/v1/auth" });
+  server.register(productRoutes, { prefix: "api/v1/admin/product" });
 
   try {
     server.listen({ port: +appConfig.port }, (err, address) => {
